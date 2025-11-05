@@ -26,6 +26,11 @@ public class Customer extends Person implements Payee {
 
     }
 
+    @Override
+    public void eat() {
+
+    }
+
     public double getPatienceAmount() {
         return patienceAmount;
     }
@@ -37,4 +42,5 @@ public class Customer extends Person implements Payee {
     public Order getOrder() {
         return order;
     }
+
 }
