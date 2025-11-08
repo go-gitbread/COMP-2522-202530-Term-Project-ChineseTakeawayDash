@@ -9,7 +9,7 @@ plugins {
 }
 
 application {
-    mainClass = "Driver"
+    mainClass = "Main"
 }
 
 java {
@@ -26,6 +26,7 @@ javafx {
 checkstyle {
     toolVersion = "10.26.1"
 }
+
 
 tasks.named('checkstyleTest') {
     enabled = false
