@@ -28,12 +28,17 @@ public class Tile {
         tileImageView.setFitHeight(TILE_HEIGHT_SIZE);
     }
 
+    /**
+     * Returns the tile's image.
+     *
+     * @return the tile's image (raw pixels)
+     */
     public Image getTileImage() {
         return this.tileImage;
     }
 
     /**
-     * Returns the tile's TileImageView
+     * Returns the tile's TileImageView.
      *
      * @return the tile's TileImageView
      */
