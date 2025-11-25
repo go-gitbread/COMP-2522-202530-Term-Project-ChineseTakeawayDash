@@ -23,9 +23,7 @@ public class Tile {
     public Tile(Image tileImage, boolean isCollision) {
         this.tileImage = tileImage;
         this.isCollision = isCollision;
-        ImageView tileImageView = new ImageView(this.tileImage);
-        tileImageView.setFitWidth(TILE_WIDTH_SIZE);
-        tileImageView.setFitHeight(TILE_HEIGHT_SIZE);
+        this.tileImageView = new ImageView(this.tileImage);
     }
 
     /**
