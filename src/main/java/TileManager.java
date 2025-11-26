@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class TileManager {
-    public static final int TILE_SIZE = 32;
+    public static final int TILE_SIZE = 38;
 
     private final Tile[] tiles;
     private final int rows;
