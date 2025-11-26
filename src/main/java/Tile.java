@@ -8,16 +8,9 @@ import javafx.scene.image.ImageView;
  * @version 2025
  */
 public class Tile {
-    /**
-     * The pixel height size of a tile's width.
-     */
-    private final static int TILE_WIDTH_SIZE = 32;
-    /**
-     * The pixel height size of a tile's height.
-     */
-    private final static int TILE_HEIGHT_SIZE = 32;
-    private final Image tileImage;
-    private ImageView tileImageView;
+
+    protected final Image tileImage;
+    protected ImageView tileImageView;
     private boolean isCollision;
 
     public Tile(Image tileImage, boolean isCollision) {
