@@ -7,8 +7,6 @@ public class Table extends Sprite {
     private List<Customer> seatedCustomers;
     private Boolean isFull;
     private Boolean isClean;
-    private double xCoordinate;
-    private double yCoordinate;
 
     /**
      * Constructs a Sprite object.
