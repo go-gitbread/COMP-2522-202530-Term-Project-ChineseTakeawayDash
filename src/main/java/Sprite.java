@@ -1,7 +1,6 @@
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
 import java.util.Objects;
 
 /**
@@ -12,7 +11,10 @@ import java.util.Objects;
  * @version 2025
  */
 public class Sprite {
-    private static final int TILE_SIZE = 50;
+    /**
+     * The size of the sprite.
+     */
+    private static final int SPRITE_SIZE = 50;
     private double xCoordinate;
     private double yCoordinate;
     private Image image;
@@ -29,36 +31,49 @@ public class Sprite {
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.image = image;
-        this.imageView = new ImageView(this.image);
-        this.imageView.setFitWidth(TILE_SIZE);
-        this.imageView.setFitHeight(TILE_SIZE);
-        this.imageView.setX(xCoordinate);
-        this.imageView.setY(yCoordinate);
+        this.imageView = setUpImageViewForSprite(xCoordinate, yCoordinate);
     }
 
+    /**
+     * Helper function to set up ImageView for the constructor
+     *
+     * @param xCoordinate represents the xCoordinate coordinate value as a double
+     * @param yCoordinate represents the yCoordinate coordinate value as a double
+     * @return view for the constructor
+     */
+    private ImageView setUpImageViewForSprite(double xCoordinate, double yCoordinate) {
+        ImageView view = new ImageView(this.image);
+        view.setFitWidth(SPRITE_SIZE);
+        view.setFitHeight(SPRITE_SIZE);
+        view.setX(xCoordinate);
+        view.setY(yCoordinate);
+        return view;
+    }
+
+    /**
+     * Return the sprite's image view.
+     *
+     * @return the sprite's image view
+     */
     public ImageView getImageView() {
         return this.imageView;
     }
 
     /**
-     * Returns a rectangle of as if the next block
+     * Set the sprite's xCoordinate to the new xCoordinate.
      *
-     * @return a rectangle of sprite's boundaries
+     * @param newXCoordinate the new x Coordinate
      */
-    public Rectangle2D getBounds(double nextX, double nextY) {
-        return new Rectangle2D(
-                nextX,
-                nextY,
-                this.getNewImageWidth(),
-                this.getNewImageHeight()
-        );
-    }
-
     protected void setXCoordinate(double newXCoordinate) {
         this.xCoordinate = newXCoordinate;
         this.imageView.setX(newXCoordinate);
     }
 
+    /**
+     * Set the sprite's yCoordinate to the new yCoordinate.
+     *
+     * @param newYCoordinate the new y Coordinate
+     */
     protected void setYCoordinate(double newYCoordinate) {
         this.yCoordinate = newYCoordinate;
         this.imageView.setY(newYCoordinate);
@@ -77,10 +92,6 @@ public class Sprite {
         return this.imageView.getFitWidth();
 
     }
-
-
-
-
     /**
      * Returns the xCoordinate coordinate of the sprite.
      *
@@ -106,6 +117,20 @@ public class Sprite {
      */
     protected Image getImage() {
         return image;
+    }
+
+    /**
+     * Returns a rectangle of as if the next block
+     *
+     * @return a rectangle of sprite's boundaries
+     */
+    public Rectangle2D getBounds(double nextX, double nextY) {
+        return new Rectangle2D(
+                nextX,
+                nextY,
+                this.getNewImageWidth(),
+                this.getNewImageHeight()
+        );
     }
 
 
