@@ -41,7 +41,7 @@ public class Sprite {
     }
 
     /**
-     * Returns a rectangle of sprite's boundaries.
+     * Returns a rectangle of as if the next block
      *
      * @return a rectangle of sprite's boundaries
      */
