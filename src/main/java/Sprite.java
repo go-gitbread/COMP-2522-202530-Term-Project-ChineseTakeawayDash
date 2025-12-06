@@ -45,8 +45,13 @@ public class Sprite {
      *
      * @return a rectangle of sprite's boundaries
      */
-    public Rectangle2D getBounds() {
-        return new Rectangle2D(xCoordinate, yCoordinate, image.getWidth(), image.getHeight());
+    public Rectangle2D getBounds(double nextX, double nextY) {
+        return new Rectangle2D(
+                nextX,
+                nextY,
+                this.getNewImageWidth(),
+                this.getNewImageHeight()
+        );
     }
 
     protected void setXCoordinate(double newXCoordinate) {
@@ -63,6 +68,16 @@ public class Sprite {
         this.image = newImage;
         this.imageView.setImage(newImage);
     }
+
+    protected double getNewImageHeight() {
+        return this.imageView.getFitHeight();
+
+    }
+    protected double getNewImageWidth() {
+        return this.imageView.getFitWidth();
+
+    }
+
 
 
 
@@ -92,6 +107,9 @@ public class Sprite {
     protected Image getImage() {
         return image;
     }
+
+
+
 
     /**
      * Returns the object as a String representation.
