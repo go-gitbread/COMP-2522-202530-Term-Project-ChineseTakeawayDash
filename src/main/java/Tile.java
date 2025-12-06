@@ -1,3 +1,4 @@
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -7,15 +8,16 @@ import javafx.scene.image.ImageView;
  * @author Jiayin Jossie Yan
  * @version 2025
  */
-public class Tile {
+public class Tile implements Interactable {
 
-    protected final Image tileImage;
+    protected Image tileImage;
     protected ImageView tileImageView;
     private boolean isCollision;
 
+
     public Tile(Image tileImage, boolean isCollision) {
-        this.tileImage = tileImage;
         this.isCollision = isCollision;
+        this.tileImage = tileImage;
         this.tileImageView = new ImageView(this.tileImage);
     }
 
@@ -37,6 +39,15 @@ public class Tile {
         return this.tileImageView;
     }
 
+
+    public void setTileImageView(ImageView newImageView) {
+        this.tileImageView = newImageView;
+    }
+
+    public void setTileImage(Image newImage) {
+        this.tileImage = newImage;
+    }
+
     /**
      * Returns true if the tile is considered a collision.
      *
@@ -53,5 +64,25 @@ public class Tile {
      */
     public void setCollision(boolean newCollision) {
         this.isCollision = newCollision;
+    }
+
+
+    @Override
+    public void interact(Waiter waiter) {
+        System.out.println("This tile has no interaction.");
+    }
+
+    @Override
+    public boolean isInteractable() {
+        return false;
+    }
+
+    public Rectangle2D getBounds() {
+        return new Rectangle2D(
+                tileImageView.getX(),
+                tileImageView.getY(),
+                tileImageView.getImage().getWidth(),
+                tileImageView.getImage().getHeight()
+        );
     }
 }
