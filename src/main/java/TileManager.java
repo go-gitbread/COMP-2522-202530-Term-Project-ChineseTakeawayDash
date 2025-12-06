@@ -1,3 +1,4 @@
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -5,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileManager {
     public static final int TILE_SIZE = 38;
@@ -14,6 +17,7 @@ public class TileManager {
     private final int cols;
     private final int[][] mapTileIds;
     private final Pane mapLayer = new Pane();
+    private final List<Tile> placedObjects = new ArrayList<>();
 
     public TileManager(int rows, int cols) {
         this.rows = rows;
@@ -22,11 +26,20 @@ public class TileManager {
         this.mapTileIds = new int[rows][cols];
     }
 
+    /**
+     * Adds the object furniture to the tile manager.
+     *
+     * @param obj the tile
+     */
+    public void adObject(Tile obj) {
+        placedObjects.add(obj);
+    }
+
 
     public void loadTileImages() {
-        tiles[0] = new Tile(new Image("file:src/main/resources/brick_walling.png"), true);
-        tiles[1] = new Tile(new Image("file:src/main/resources/flooring.png"), false);
-        tiles[2] = new Tile(new Image("file:src/main/resources/kitchen_flooring.png"), false);
+        tiles[0] = new Tile(new Image("file:src/main/resources/background/brick_walling.png"), true);
+        tiles[1] = new Tile(new Image("file:src/main/resources/background/flooring.png"), false );
+        tiles[2] = new Tile(new Image("file:src/main/resources/background/kitchen_flooring.png"), false);
     }
 
     /**
@@ -76,4 +89,75 @@ public class TileManager {
         }
         return mapLayer;
     }
+
+    public boolean isCollision(Sprite sprite, double nextX, double nextY) {
+        Rectangle2D nextBounds = sprite.getBounds(nextX, nextY);  // NEW
+
+        if (checkTileMapCollision(nextBounds)) {
+            return true;
+        }
+
+        for (Tile obj : placedObjects) {
+            if (!obj.isCollision())  {
+                continue;
+            }
+            Rectangle2D objBounds = new Rectangle2D(
+                    obj.getTileImageView().getX(),
+                    obj.getTileImageView().getY(),
+                    obj.getTileImageView().getFitWidth(),
+                    obj.getTileImageView().getFitHeight()
+            );
+
+            if (nextBounds.intersects(objBounds)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean checkObjectCollision(Rectangle2D spriteBounds, Tile obj) {
+        Rectangle2D objBounds = new Rectangle2D(
+                obj.getTileImageView().getX(),
+                obj.getTileImageView().getY(),
+                obj.getTileImageView().getFitWidth(),
+                obj.getTileImageView().getFitHeight()
+        );
+
+        return spriteBounds.intersects(objBounds);
+    }
+
+
+    private boolean checkTileMapCollision(Rectangle2D futureBounds) {
+
+        int leftCol   = (int) (futureBounds.getMinX() / TILE_SIZE);
+        int rightCol  = (int) (futureBounds.getMaxX() / TILE_SIZE);
+        int topRow    = (int) (futureBounds.getMinY() / TILE_SIZE);
+        int bottomRow = (int) (futureBounds.getMaxY() / TILE_SIZE);
+
+
+        return tiles[mapTileIds[topRow][leftCol]].isCollision()
+                || tiles[mapTileIds[topRow][rightCol]].isCollision()
+                || tiles[mapTileIds[bottomRow][leftCol]].isCollision()
+                || tiles[mapTileIds[bottomRow][rightCol]].isCollision();
+    }
+
+
+    public void checkInteraction(Waiter waiter) {
+
+        Rectangle2D zone = waiter.getInteractionBox();
+
+        for (Tile obj : placedObjects) {
+            if (obj == null) continue;
+
+            if (zone.intersects(obj.getBounds())) {
+                obj.interact(waiter);
+                return;
+            }
+        }
+
+        System.out.println("Nothing...");
+    }
+
+
 }
