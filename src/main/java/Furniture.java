@@ -1,13 +1,13 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class KitchenFurniture extends Tile {
+public class Furniture extends Tile {
     public static final int TILE_SIZE = 50;
     private final FurnitureName furnitureName;
     private final double xCoordinate;
     private final double yCoordinate;
 
-    public KitchenFurniture(double xCoordinate, double yCoordinate, Boolean isCollision, FurnitureName furnitureName) {
+    public Furniture(double xCoordinate, double yCoordinate, Boolean isCollision, FurnitureName furnitureName) {
         super(new Image("file:src/main/resources/chair_facing_right.png"), isCollision);
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
@@ -60,6 +60,14 @@ public class KitchenFurniture extends Tile {
                 this.getTileImageView().setY(yCoordinate);
                 this.getTileImageView().setFitWidth(TILE_SIZE);
                 this.getTileImageView().setFitHeight(TILE_SIZE + 20);
+            }
+            case FurnitureName.INSTRUCTIONS_BOOK -> {
+                this.setTileImage(new Image("file:src/main/resources/instructions_book.png"));
+                this.setTileImageView(new ImageView(this.getTileImage()));
+                this.getTileImageView().setX(xCoordinate);
+                this.getTileImageView().setY(yCoordinate);
+                this.getTileImageView().setFitWidth(TILE_SIZE / 2.0);
+                this.getTileImageView().setFitHeight(TILE_SIZE / 2.0);
             }
             default -> System.out.println("error, no furniture");
         }

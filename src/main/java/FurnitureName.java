@@ -4,5 +4,6 @@ public enum FurnitureName {
     VERTICAL_COUNTER,
     SHELF,
     STOVE,
+    INSTRUCTIONS_BOOK,
     SINK
 }
