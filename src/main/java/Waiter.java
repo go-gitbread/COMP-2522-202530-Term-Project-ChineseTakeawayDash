@@ -172,8 +172,8 @@ public class Waiter extends Sprite {
     public Rectangle2D getInteractionBox() {
         double x = this.getXCoordinate();
         double y = this.getYCoordinate();
-        double w = this.getNewImageWidth();
-        double h = this.getNewImageHeight();
+        double w = this.getImageViewWidth();
+        double h = this.getImageViewHeight();
 
         switch (direction) {
             case "up":

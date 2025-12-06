@@ -79,16 +79,24 @@ public class Sprite {
         this.imageView.setY(newYCoordinate);
     }
 
+    /**
+     * Set the image and imageView to the newImage.
+     *
+     * @param newImage the image and image view to the newImage.
+     */
     protected void setNewImage(Image newImage) {
         this.image = newImage;
         this.imageView.setImage(newImage);
     }
 
-    protected double getNewImageHeight() {
+    /**
+     * @return the current image
+     */
+    protected double getImageViewHeight() {
         return this.imageView.getFitHeight();
 
     }
-    protected double getNewImageWidth() {
+    protected double getImageViewWidth() {
         return this.imageView.getFitWidth();
 
     }
@@ -128,8 +136,8 @@ public class Sprite {
         return new Rectangle2D(
                 nextX,
                 nextY,
-                this.getNewImageWidth(),
-                this.getNewImageHeight()
+                this.getImageViewWidth(),
+                this.getImageViewHeight()
         );
     }
 
