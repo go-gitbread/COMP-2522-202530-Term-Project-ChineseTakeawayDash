@@ -5,5 +5,9 @@ public enum FurnitureName {
     SHELF,
     STOVE,
     INSTRUCTIONS_BOOK,
-    SINK
+    SINK,
+    PLANTS,
+    COW_PAINTING,
+    MOUNTAIN_PAINTING,
+    BOXES
 }
