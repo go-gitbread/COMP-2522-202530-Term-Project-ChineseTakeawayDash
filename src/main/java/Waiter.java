@@ -43,7 +43,7 @@ public final class Waiter extends Sprite {
     private final Set<KeyCode> keysPressed = new HashSet<>();
     private static final double SPEED = 4;
     private String direction = "down";
-    private TileManager tileManager;
+    private final TileManager tileManager;
 
 
     /**
@@ -245,6 +245,11 @@ public final class Waiter extends Sprite {
         }
     }
 
+    /**
+     * Returns the object as a String representation.
+     *
+     * @return representation of the object as a string
+     */
     @Override
     public String toString() {
         final StringBuilder sb;
@@ -271,6 +276,12 @@ public final class Waiter extends Sprite {
         return sb.toString();
     }
 
+    /**
+     * Returns true if the objects are equal, otherwise false.
+     *
+     * @param object the reference object with which to compare.
+     * @return true if the object is equal to the comparing object
+     */
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -296,7 +307,11 @@ public final class Waiter extends Sprite {
                 && Objects.equals(direction, waiter.direction)
                 && Objects.equals(tileManager, waiter.tileManager);
     }
-
+    /**
+     * Returns the hashcode representation of the waiter object.
+     *
+     * @return the hashcode of the waiter object as int
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(),
