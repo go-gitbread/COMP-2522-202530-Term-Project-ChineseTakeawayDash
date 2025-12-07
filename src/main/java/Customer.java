@@ -1,46 +1,114 @@
-public class Customer extends Person implements Payee {
-    private final Order order;
-    private final CustomerSatisfaction customerSatisfaction;
-    private final double patienceAmount;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-    protected Customer(String name,
-                       int xCoordinate,
-                       int yCoordinate,
-                       Order order,
-                       CustomerSatisfaction customerSatisfaction, double patienceAmount) {
-        super(name, xCoordinate, yCoordinate);
-        this.order = order;
-        this.customerSatisfaction = customerSatisfaction;
-        this.patienceAmount = patienceAmount;
+public class Customer extends Tile implements Interactable {
+    private CustomerState customerState;
+    private Table assignedTable;
+    private boolean hasFood;
+    private boolean orderReady;
+    private double moneyToPay;
+    private double xCoordinate;
+    private double yCoordinate;
+    public static final int CUSTOMER_SIZE = 28;
+    private final boolean isInteractable;
+    /**
+     * Constructs a Sprite object.
+     *
+     * @param xCoordinate represents the xCoordinate coordinate value as a double
+     * @param yCoordinate represents the yCoordinate coordinate value as a double
+     */
+    protected Customer(double xCoordinate, double yCoordinate) {
+        super(new Image("file:src/main/resources/chicken.png"), true);
+
+        this.customerState = CustomerState.WAITING_FOR_SEAT;
+        this.moneyToPay = 100.0;
+
+        this.setTileImageView(new ImageView(this.getTileImage()));
+        this.getTileImageView().setFitWidth(CUSTOMER_SIZE);
+        this.getTileImageView().setFitHeight(CUSTOMER_SIZE);
+
+        this.setXCoordinate(xCoordinate);
+        this.setYCoordinate(yCoordinate);
+
+        this.isInteractable = true;
     }
 
-    // if the order is completed, and buffer time is over, pay
-    @Override
-    public void pay() {
+    public CustomerState getState() {
+        return this.customerState;
+    }
+    public void setState(CustomerState customerState) {
+        this.customerState = customerState;
+    }
+
+    public void assignTable(Table table) {
+        this.assignedTable = table;
+    }
+
+    public Table getAssignedTable() {
+        return this.assignedTable;
+    }
+
+    public void sitDown() {
+        if (assignedTable != null) {
+            customerState = CustomerState.SEATED;
+            this.setXCoordinate(assignedTable.getXCoordinate() - 40);
+            this.setYCoordinate(assignedTable.getYCoordinate());
+        }
 
     }
 
-    //if paid/ or patience runs out, leave
-    @Override
+
+
+    public void receiveFood() {
+        if (customerState == CustomerState.WAITING_FOR_FOOD) {
+            customerState = CustomerState.EATING;
+        }
+    }
+    public boolean isFinished() {
+        return customerState == CustomerState.FINISHED;
+    }
+
+    public double getMoneyToPay() {
+        return this.moneyToPay;
+    }
+
     public void leave() {
-
+        customerState = CustomerState.LEAVING;
     }
 
     @Override
-    public void eat() {
+    public String interact(Waiter waiter) {
+        if (customerState != CustomerState.WAITING_FOR_SEAT) {
+            return "";
+        }
 
+        if (waiter.isCarryingCustomer()) {
+            return "";
+        }
+
+        waiter.pickUpCustomer(this);
+        this.customerState = CustomerState.BEING_CARRIED;
+
+        System.out.println("Customer picked up!");
+
+        return "";
     }
 
-    public double getPatienceAmount() {
-        return patienceAmount;
+    @Override
+    public boolean isInteractable() {
+        return true;
     }
 
-    public CustomerSatisfaction getCustomerSatisfaction() {
-        return customerSatisfaction;
+    public void setXCoordinate(double xCoordinate) {
+        this.xCoordinate = xCoordinate;
+        this.getTileImageView().setX(xCoordinate);
+
+    }
+    public void setYCoordinate(double yCoordinate) {
+        this.yCoordinate = yCoordinate;
+        this.getTileImageView().setY(yCoordinate);
     }
 
-    public Order getOrder() {
-        return order;
-    }
+
 
 }
