@@ -1,13 +1,24 @@
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-
 import java.util.HashSet;
 import java.util.Set;
 
-public class Waiter extends Sprite {
+/**
+ * Represents a Waiter
+ *
+ * @author Jiayin Jossie Yan
+ * @version 2025
+ */
+public final class Waiter extends Sprite {
 
+    /**
+     * The width of the waiter's interaction box.
+     */
     private static final double INTERACTION_BOX_WIDTH = 50;
+    /**
+     * The height of the waiter's interaction box.
+     */
     private static final double INTERACTION_BOX_HEIGHT = 50;
     
     
@@ -35,20 +46,24 @@ public class Waiter extends Sprite {
 
 
     /**
-     * Constructs a Waiter object.
+     * Creates a waiter.
      *
      * @param xCoordinate represents the xCoordinate coordinate value as a double
      * @param yCoordinate represents the yCoordinate coordinate value as a double
+     * @param tileManager represents the tile manager
      */
-    protected Waiter(double xCoordinate, double yCoordinate, TileManager tileManager) {
+    Waiter(double xCoordinate, double yCoordinate, TileManager tileManager) {
         super(xCoordinate,
                 yCoordinate, new Image("file:src/main/resources/front.png"));
-        this.currentIncome = 0;
+        this.currentIncome = 0.0;
         this.tileManager = tileManager;
         loadWaiterImage();
         updateSpriteImage();
     }
 
+    /**
+     * Loads the sprite images.
+     */
     public void loadWaiterImage() {
         try {
             up1 = new Image("file:src/main/resources/waiter/back.png");
@@ -72,18 +87,27 @@ public class Waiter extends Sprite {
         }
 
     }
-    
 
+    /**
+     * Returns the income of the waiter.
+     *
+     * @return the income of the waiter
+     */
     public double getCurrentIncome() {
         return currentIncome;
     }
 
-    public void setCurrentIncome(double currentIncome) {
-        this.currentIncome = currentIncome;
+    /**
+     * Sets the waiter's income to the current income
+     *
+     * @param newIncome the new income
+     */
+    public void setCurrentIncome(double newIncome) {
+        this.currentIncome = newIncome;
     }
 
     /**
-     *
+     * update the locations of the waiter based on the key pressed.
      */
     public void update() {
 
@@ -95,19 +119,19 @@ public class Waiter extends Sprite {
 
         if (keysPressed.contains(KeyCode.A)) {
             attemptedX -= SPEED;
-            direction = "left";
+            this.setDirection("left");
         }
         if (keysPressed.contains(KeyCode.D)) {
             attemptedX += SPEED;
-            direction = "right";
+            this.setDirection("right");
         }
         if (keysPressed.contains(KeyCode.W)) {
             attemptedY -= SPEED;
-            direction = "up";
+            this.setDirection("up");
         }
         if (keysPressed.contains(KeyCode.S)) {
             attemptedY += SPEED;
-            direction = "down";
+            this.setDirection("down");
         }
 
         if (!tileManager.isCollision(this, attemptedX, currentY)) {
@@ -124,6 +148,9 @@ public class Waiter extends Sprite {
 
     }
 
+    /**
+     * Updates the image based on the direction.
+     */
     private void updateSpriteImage() {
         Image newImage = up2;
         if (direction == null) {
@@ -149,44 +176,71 @@ public class Waiter extends Sprite {
 
     }
 
+    /**
+     * Records that key was pressed.
+     *
+     * @param code the pressed key
+     */
     public void handleKeyPressed(KeyCode code) {
         keysPressed.add(code);
     }
 
+    /**
+     * Records that key was released.
+     *
+     * @param code the key released
+     */
     public void handleKeyReleased(KeyCode code) {
         keysPressed.remove(code);
     }
 
+    /**
+     * Returns the direction of the waiter is facing as string.
+     *
+     * @return the direction of the waiter as a string
+     */
     public String getDirection() {
         return direction;
     }
 
+    /**
+     * Sets the new direction.
+     *
+     * @param direction the new direction
+     */
     public void setDirection(String direction) {
         this.direction = direction;
     }
 
+    /**
+     * Triggers the tile manager to check interaction.
+     */
     public void interact() {
         tileManager.checkInteraction(this);
     }
 
+    /**
+     * Returns a rectangle that represents the interaction area in front, depending on the waiter's direction.
+     *
+     * @return rectangular interaction zone that is in front of the waiter depending on the direction.
+     */
     public Rectangle2D getInteractionBox() {
-        double x = this.getXCoordinate();
-        double y = this.getYCoordinate();
-        double w = this.getImageViewWidth();
-        double h = this.getImageViewHeight();
+        double xCoordinateHold = this.getXCoordinate();
+        double yCoordinateHold = this.getYCoordinate();
+        double imageViewWidth = this.getImageViewWidth();
+        double imageViewHeight = this.getImageViewHeight();
 
-        switch (direction) {
+        switch (this.direction) {
             case "up":
-                return new Rectangle2D(x, y - INTERACTION_BOX_HEIGHT, w, INTERACTION_BOX_HEIGHT);
+                return new Rectangle2D(xCoordinateHold, yCoordinateHold - INTERACTION_BOX_HEIGHT, imageViewWidth, INTERACTION_BOX_HEIGHT);
             case "down":
-                return new Rectangle2D(x, y + h, w, INTERACTION_BOX_HEIGHT);
+                return new Rectangle2D(xCoordinateHold, yCoordinateHold + imageViewHeight, imageViewWidth, INTERACTION_BOX_HEIGHT);
             case "left":
-                return new Rectangle2D(x - INTERACTION_BOX_WIDTH, y, INTERACTION_BOX_WIDTH, h);
+                return new Rectangle2D(xCoordinateHold - INTERACTION_BOX_WIDTH, yCoordinateHold, INTERACTION_BOX_WIDTH, imageViewHeight);
             case "right":
-                return new Rectangle2D(x + w, y, INTERACTION_BOX_WIDTH, h);
+                return new Rectangle2D(xCoordinateHold + imageViewWidth, yCoordinateHold, INTERACTION_BOX_WIDTH, imageViewHeight);
             default:
-                return new Rectangle2D(x, y, w, h);
+                return new Rectangle2D(xCoordinateHold, yCoordinateHold, imageViewWidth, imageViewHeight);
         }
     }
-
 }
