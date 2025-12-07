@@ -18,6 +18,7 @@ public class TileManager {
     private final int[][] mapTileIds;
     private final Pane mapLayer = new Pane();
     private final List<Tile> placedObjects = new ArrayList<>();
+    private Furniture interactable;
 
     public TileManager(int rows, int cols) {
         this.rows = rows;
@@ -143,22 +144,17 @@ public class TileManager {
     }
 
 
-    public void checkInteraction(Waiter waiter) {
-
+    public String checkInteraction(Waiter waiter) {
         Rectangle2D zone = waiter.getInteractionBox();
-
         for (Tile obj : placedObjects) {
 
-            if (obj == null) {
-                continue;
-            }
-            if (zone.intersects(obj.getBounds())) {
-                obj.interact(waiter);
-                return;
+            if (obj instanceof Interactable interactable &&
+                    zone.intersects(obj.getBounds())) {
+
+                return interactable.interact(waiter);
             }
         }
-
-        System.out.println("Nothing...");
+        return "";
     }
 
 }
