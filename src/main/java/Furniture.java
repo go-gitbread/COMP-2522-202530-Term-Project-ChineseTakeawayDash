@@ -169,27 +169,38 @@ public class Furniture extends Tile implements Interactable {
     public String interact(Waiter waiter) {
         switch (furnitureName) {
             case STOVE:
-                return "This is the stove. It's hot!";
+                return "This is the stove. Looks like your dad is cooking something. It's hot!";
             case DESK:
-                return "A tidy desk with some papers on it.";
+                return "Welcome to Lok Lok Garden.\n" +
+                        "You just moved to a small town with your family.\n" +
+                        "They have opened a restaurant.\n" +
+                        "Your parents don't really understand english, so you will have to:\n" +
+                        "1. TAKE CUSTOMERS TO A TABLE\n" +
+                        "2. TAKE THEIR ORDERS\n" +
+                        "3. PICK UP THE DISHES\n" +
+                        "3. AND PICK UP THE MONEY FROM THE TABLES\n";
             case FRYER:
-                return "The fryer is bubbling with oil.";
+                return "Hmmm, the warm smell of egg-rolls and sweet \n" +
+                        "and sour chicken balls fills you with grease";
             case SINK:
-                return "Dirty dishes pile up in the sink.";
+                return "Dirty dishes pile up in the sink... Ew that's so gross.";
             case SHELF:
-                return "A shelf full of ingredients.";
+                return "Wow there sure are a lot kinds of soy sauces";
             case INSTRUCTIONS_BOOK:
-                return "“Welcome to the diner!\nPress E to continue...”";
+                return "";
             case COW_PAINTING:
-                return "A cute cow painting. Moo!";
+                return "A cute cow painting. Moo!\n" +
+                        "Reminds you of a nice burger you had at A&W";
             case MOUNTAIN_PAINTING:
-                return "A peaceful mountain landscape.";
+                return "A peaceful mountain landscape.\n" +
+                        "You hope that one day you can see the real mountains.";
             case BOXES:
-                return "A stack of boxes full of supplies.";
+                return "A stack of boxes full random supplies...";
             case PLANTS:
-                return "Some lovely green plants.";
+                return "Some lovely green plants.\n" +
+                        "You're 90% sure that one of them are fake...";
             default:
-                return "none";
+                return "";
         }
 
     }
