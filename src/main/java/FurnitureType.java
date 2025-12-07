@@ -1,4 +1,4 @@
-public enum FurnitureName {
+public enum FurnitureType {
     FRYER,
     STOVE,
     INSTRUCTIONS_BOOK,
