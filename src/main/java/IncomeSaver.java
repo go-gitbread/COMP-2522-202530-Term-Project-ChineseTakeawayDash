@@ -10,16 +10,23 @@ import java.nio.file.Path;
  * @author Jossie Yan
  * @version 2025
  */
-public class IncomeSaver {
+public final class IncomeSaver {
 
     private static final Path PATH = Path.of("src/main/java/income.txt");
+
+    /**
+     * Prevents instantiation.
+     */
+    private IncomeSaver() {
+    }
+
 
     /**
      * Saves income to file.
      *
      * @param income saves the value of income into income.txt file
      */
-    public static void saveIncome(double income) {
+    public static void saveIncome(final double income) {
         try (PrintWriter writer = new PrintWriter(Files.newBufferedWriter(PATH))) {
             writer.println(income);
             System.out.println("Income saved: " + income);
@@ -41,7 +48,7 @@ public class IncomeSaver {
         try (BufferedReader reader = new BufferedReader(new FileReader(PATH.toFile()))) {
             String line = reader.readLine();
             return Double.parseDouble(line);
-        } catch (Exception e) {
+        } catch (IOException e) {
             System.out.println("not found");
             return 0;
         }
