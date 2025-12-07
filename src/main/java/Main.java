@@ -157,17 +157,17 @@ public class Main extends Application {
         tileManager.adObject(shelf);
 
 
-        Furniture counter3 = new Furniture(550, 500, true, FurnitureName.HORIZONTAL_COUNTER);
+        Furniture desk = new Furniture(550, 500, true, FurnitureName.DESK);
 
         root.getChildren().addAll(
-                counter3.getTileImageView()
+                desk.getTileImageView()
 
         );
 
-        tileManager.adObject(counter3);
+        tileManager.adObject(desk);
 
         // add the book on the front desk
-        Furniture instructions = new Furniture(575, 500d, true, FurnitureName.INSTRUCTIONS_BOOK);
+        Furniture instructions = new Furniture(575, 500, true, FurnitureName.INSTRUCTIONS_BOOK);
 
         root.getChildren().addAll(
                 instructions.getTileImageView()
@@ -226,6 +226,7 @@ public class Main extends Application {
                 waiter.interact();
             }
             System.out.println("Interaction box = " + waiter.getInteractionBox());
+            System.out.println("instrcutions = " + instructions.getBounds());
 
 
         });
