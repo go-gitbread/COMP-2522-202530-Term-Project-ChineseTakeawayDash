@@ -1,6 +1,8 @@
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -44,6 +46,9 @@ public final class Waiter extends Sprite {
     private static final double SPEED = 4;
     private String direction = "down";
     private final TileManager tileManager;
+
+    private Customer carryingCustomer;
+    private Dish carriedDish;
 
 
     /**
@@ -142,11 +147,22 @@ public final class Waiter extends Sprite {
             currentY = attemptedY;
         }
 
+
+
         this.setXCoordinate(currentX);
         this.setYCoordinate(currentY);
 
-        updateSpriteImage();
+        if (carryingCustomer != null) {
+            carryingCustomer.setXCoordinate(this.getXCoordinate());
+            carryingCustomer.setYCoordinate(this.getYCoordinate() - 20);
+        }
 
+        if (carriedDish != null) {
+            carriedDish.setXCoordinate(this.getXCoordinate() + 10);
+            carriedDish.setYCoordinate(this.getYCoordinate() - 10);
+        }
+
+        updateSpriteImage();
     }
 
     /**
@@ -246,6 +262,55 @@ public final class Waiter extends Sprite {
     }
 
     /**
+     * @param money the money to be added to income
+     */
+    public void addIncome(double money) {
+        this.currentIncome += money;
+    }
+
+    public void pickUpCustomer(Customer customer) {
+        this.carryingCustomer = customer;
+        customer.setCollision(false);
+        tileManager.remove(customer);
+    }
+
+    public boolean seatCustomerAtTable(Table table) {
+        if (carryingCustomer != null && !table.isAtMax()) {
+            carryingCustomer.assignTable(table);
+            carryingCustomer.sitDown();
+            table.addCustomer(carryingCustomer);
+            tileManager.spawnDishForCustomer();
+            carryingCustomer = null;
+            return true;
+        }
+        return false;
+    }
+    public void pickUpDish(Dish dish) {
+        if (carriedDish == null) {
+            this.carriedDish = dish;
+            dish.pickUp();
+        }
+    }
+
+
+    public boolean isCarryingCustomer() {
+        return carryingCustomer != null;
+    }
+
+    public boolean isCarryingDish() {
+        return carriedDish != null;
+    }
+
+    public Customer getCarryingCustomer() {
+        return carryingCustomer;
+    }
+    public void deleteDish() {
+        this.carriedDish = null;
+    }
+    public Dish getCarriedDish() {
+        return carriedDish;
+    }
+    /**
      * Returns the object as a String representation.
      *
      * @return representation of the object as a string
@@ -333,4 +398,7 @@ public final class Waiter extends Sprite {
                 direction,
                 tileManager);
     }
+
+
+
 }
