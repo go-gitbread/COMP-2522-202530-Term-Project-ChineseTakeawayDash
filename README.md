@@ -4,7 +4,7 @@ Introduction:
 The idea was to simulate what my job was like helping out the family restaurant back in the day.
 My idea was bigger than the time I had. I think I will work on this in the summer time.
 I like time management games, and it was nice to recreate a bit of my history for a spot of nostalgia.
-
+ 
 Instructions:
 - use WASD to move around
 - use J to interact with objects in the game
