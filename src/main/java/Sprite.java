@@ -18,7 +18,7 @@ public class Sprite {
     private double xCoordinate;
     private double yCoordinate;
     private Image image;
-    private ImageView imageView;
+    private final ImageView imageView;
 
     /**
      * Constructs a Sprite object.
@@ -86,20 +86,38 @@ public class Sprite {
      */
     protected void setNewImage(Image newImage) {
         this.image = newImage;
-        this.imageView.setImage(newImage);
+        this.setImageView(image);
     }
 
     /**
-     * @return the current image
+     * Sets the imageview to the image.
+     *
+     * @param image the image for the image view
+     */
+    private void setImageView(Image image) {
+        this.imageView.setImage(image);
+    }
+
+    /**
+     * Return the sprites imageview's height.
+     *
+     * @return the current imageview's height
      */
     protected double getImageViewHeight() {
         return this.imageView.getFitHeight();
 
     }
+
+    /**
+     * Return the sprites imageview's width.
+     *
+     * @return the current imageview's width
+     */
     protected double getImageViewWidth() {
         return this.imageView.getFitWidth();
 
     }
+
     /**
      * Returns the xCoordinate coordinate of the sprite.
      *
@@ -127,10 +145,13 @@ public class Sprite {
         return image;
     }
 
+
     /**
-     * Returns a rectangle of as if the next block
+     * Returns a rectangle representing of the sprite at the coordinates
      *
-     * @return a rectangle of sprite's boundaries
+     * @param nextX the next xCoordinate of the sprite
+     * @param nextY the next yCoordinate of the sprite
+     * @return rectangle that represents the sprite's boundaries
      */
     public Rectangle2D getBounds(double nextX, double nextY) {
         return new Rectangle2D(
@@ -140,9 +161,6 @@ public class Sprite {
                 this.getImageViewHeight()
         );
     }
-
-
-
 
     /**
      * Returns the object as a String representation.
@@ -155,7 +173,10 @@ public class Sprite {
         sb = new StringBuilder("Sprite{");
         sb.append("xCoordinate=").append(xCoordinate);
         sb.append(", yCoordinate=").append(yCoordinate);
-        sb.append(", image=").append(image);
+        sb.append(", image=").append(getImage());
+        sb.append(", imageView=").append(getImageView());
+        sb.append(", XCoordinate=").append(getXCoordinate());
+        sb.append(", YCoordinate=").append(getYCoordinate());
         sb.append('}');
         return sb.toString();
     }
@@ -168,29 +189,23 @@ public class Sprite {
      */
     @Override
     public boolean equals(final Object object) {
-        if (this == object) {
+        if (this == object ) {
             return true;
         }
-        if (object == null || getClass() != object.getClass()) {
-            return false;
-        }
-        Sprite sprite = (Sprite) object;
-        return Double.compare(xCoordinate, sprite.getXCoordinate()) == 0
-                && Double.compare(yCoordinate, sprite.getYCoordinate()) == 0
-                && Objects.equals(image, sprite.getImage());
+        if (!(object instanceof Sprite sprite)) return false;
+        return Double.compare(xCoordinate, sprite.xCoordinate) == 0
+                && Double.compare(yCoordinate, sprite.yCoordinate) == 0
+                && Objects.equals(image, sprite.image)
+                && Objects.equals(imageView, sprite.imageView);
     }
-
     /**
      * Returns the hashcode representation of the sprite object.
      *
      * @return the hashcode of the sprite object as int
      */
+
     @Override
     public int hashCode() {
-        return Objects.hash(xCoordinate, yCoordinate, image);
+        return Objects.hash(xCoordinate, yCoordinate, image, imageView);
     }
-
-
-
 }
-
