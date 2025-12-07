@@ -1,0 +1,12 @@
+public enum CustomerState {
+    WAITING_FOR_SEAT,
+    BEING_ESCORTED,
+    SEATED,
+    WAITING_TO_ORDER,
+    READY_FOR_ORDER,
+    FOOD_COOKING,
+    WAITING_FOR_FOOD,
+    EATING,
+    FINISHED,
+    LEAVING
+}
