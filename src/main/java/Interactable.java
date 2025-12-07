@@ -10,8 +10,9 @@ public interface Interactable {
      * Waiter will interact with the object.
      *
      * @param waiter that will interact with the object
+     * @return a String that will display on the dialgue box
      */
-    void interact(Waiter waiter);
+    String interact(Waiter waiter);
 
     /**
      * Returns true if the object is set as interactable.
