@@ -1,5 +1,5 @@
 /**
- * Enumerates the values for FurnitureTypes
+ * Enumerates the values for FurnitureTypes.
  *
  * @author Jossie Yan
  * @version 2025
