@@ -2,6 +2,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -242,5 +243,79 @@ public final class Waiter extends Sprite {
             default:
                 return new Rectangle2D(xCoordinateHold, yCoordinateHold, imageViewWidth, imageViewHeight);
         }
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb;
+        sb = new StringBuilder("Waiter{");
+        sb.append("currentIncome=").append(getCurrentIncome());
+        sb.append(", speed=").append(speed);
+        sb.append(", up1=").append(up1);
+        sb.append(", up2=").append(up2);
+        sb.append(", up3=").append(up3);
+        sb.append(", down1=").append(down1);
+        sb.append(", down2=").append(down2);
+        sb.append(", down3=").append(down3);
+        sb.append(", left1=").append(left1);
+        sb.append(", left2=").append(left2);
+        sb.append(", left3=").append(left3);
+        sb.append(", right1=").append(right1);
+        sb.append(", right2=").append(right2);
+        sb.append(", right3=").append(right3);
+        sb.append(", keysPressed=").append(keysPressed);
+        sb.append(", direction='").append(getDirection()).append('\'');
+        sb.append(", tileManager=").append(tileManager);
+        sb.append(super.toString());
+        sb.append('}');
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (!(object instanceof Waiter waiter)) return false;
+        if (!super.equals(object)) return false;
+        return Double.compare(currentIncome, waiter.currentIncome) == 0
+                && speed == waiter.speed
+                && Objects.equals(up1, waiter.up1)
+                && Objects.equals(up2, waiter.up2)
+                && Objects.equals(up3, waiter.up3)
+                && Objects.equals(down1, waiter.down1)
+                && Objects.equals(down2, waiter.down2)
+                && Objects.equals(down3, waiter.down3)
+                && Objects.equals(left1, waiter.left1)
+                && Objects.equals(left2, waiter.left2)
+                && Objects.equals(left3, waiter.left3)
+                && Objects.equals(right1, waiter.right1)
+                && Objects.equals(right2, waiter.right2)
+                && Objects.equals(right3, waiter.right3)
+                && Objects.equals(keysPressed, waiter.keysPressed)
+                && Objects.equals(direction, waiter.direction)
+                && Objects.equals(tileManager, waiter.tileManager);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(),
+                currentIncome,
+                speed,
+                up1,
+                up2,
+                up3,
+                down1,
+                down2,
+                down3,
+                left1,
+                left2,
+                left3,
+                right1,
+                right2,
+                right3,
+                keysPressed,
+                direction,
+                tileManager);
     }
 }
