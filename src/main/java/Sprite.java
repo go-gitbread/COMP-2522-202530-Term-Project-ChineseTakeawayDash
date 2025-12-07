@@ -35,18 +35,18 @@ public class Sprite {
     }
 
     /**
-     * Helper function to set up ImageView for the constructor
+     * Helper function to set up ImageView for the constructor.
      *
-     * @param xCoordinate represents the xCoordinate coordinate value as a double
-     * @param yCoordinate represents the yCoordinate coordinate value as a double
+     * @param startXCoordinate represents the xCoordinate coordinate value as a double
+     * @param startYCoordinate represents the yCoordinate coordinate value as a double
      * @return view for the constructor
      */
-    private ImageView setUpImageViewForSprite(double xCoordinate, double yCoordinate) {
+    protected ImageView setUpImageViewForSprite(final double startXCoordinate, final double startYCoordinate) {
         ImageView view = new ImageView(this.image);
         view.setFitWidth(SPRITE_SIZE);
         view.setFitHeight(SPRITE_SIZE);
-        view.setX(xCoordinate);
-        view.setY(yCoordinate);
+        view.setX(startXCoordinate);
+        view.setY(startYCoordinate);
         return view;
     }
 
@@ -64,7 +64,7 @@ public class Sprite {
      *
      * @param newXCoordinate the new x Coordinate
      */
-    protected void setXCoordinate(double newXCoordinate) {
+    protected void setXCoordinate(final double newXCoordinate) {
         this.xCoordinate = newXCoordinate;
         this.imageView.setX(newXCoordinate);
     }
@@ -74,7 +74,7 @@ public class Sprite {
      *
      * @param newYCoordinate the new y Coordinate
      */
-    protected void setYCoordinate(double newYCoordinate) {
+    protected void setYCoordinate(final double newYCoordinate) {
         this.yCoordinate = newYCoordinate;
         this.imageView.setY(newYCoordinate);
     }
@@ -84,7 +84,7 @@ public class Sprite {
      *
      * @param newImage the image and image view to the newImage.
      */
-    protected void setNewImage(Image newImage) {
+    protected void setNewImage(final Image newImage) {
         this.image = newImage;
         this.setImageView(image);
     }
@@ -94,8 +94,8 @@ public class Sprite {
      *
      * @param image the image for the image view
      */
-    private void setImageView(Image image) {
-        this.imageView.setImage(image);
+    protected void setImageView(final Image image) {
+        imageView.setImage(image);
     }
 
     /**
@@ -145,7 +145,6 @@ public class Sprite {
         return image;
     }
 
-
     /**
      * Returns a rectangle representing of the sprite at the coordinates
      *
@@ -153,8 +152,8 @@ public class Sprite {
      * @param nextY the next yCoordinate of the sprite
      * @return rectangle that represents the sprite's boundaries
      */
-    public Rectangle2D getBounds(double nextX, double nextY) {
-        return new Rectangle2D(
+    public Rectangle2D getBounds(final double nextX, final double nextY) {
+        return new Rectangle2D (
                 nextX,
                 nextY,
                 this.getImageViewWidth(),
@@ -192,7 +191,9 @@ public class Sprite {
         if (this == object ) {
             return true;
         }
-        if (!(object instanceof Sprite sprite)) return false;
+        if (!(object instanceof Sprite sprite)) {
+            return false;
+        }
         return Double.compare(xCoordinate, sprite.xCoordinate) == 0
                 && Double.compare(yCoordinate, sprite.yCoordinate) == 0
                 && Objects.equals(image, sprite.image)
