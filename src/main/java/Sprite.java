@@ -2,11 +2,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.Objects;
-
 /**
  * Represents a Sprite.
  *
- * @author BCIT
  * @author Jiayin Jossie Yan
  * @version 2025
  */
@@ -41,7 +39,8 @@ public class Sprite {
      * @param startYCoordinate represents the yCoordinate coordinate value as a double
      * @return view for the constructor
      */
-    protected ImageView setUpImageViewForSprite(final double startXCoordinate, final double startYCoordinate) {
+    protected ImageView setUpImageViewForSprite(final double startXCoordinate,
+                                                final double startYCoordinate) {
         ImageView view = new ImageView(this.image);
         view.setFitWidth(SPRITE_SIZE);
         view.setFitHeight(SPRITE_SIZE);
@@ -86,16 +85,7 @@ public class Sprite {
      */
     protected void setNewImage(final Image newImage) {
         this.image = newImage;
-        this.setImageView(image);
-    }
-
-    /**
-     * Sets the imageview to the image.
-     *
-     * @param image the image for the image view
-     */
-    protected void setImageView(final Image image) {
-        imageView.setImage(image);
+        this.imageView.setImage(this.image);
     }
 
     /**
@@ -146,14 +136,14 @@ public class Sprite {
     }
 
     /**
-     * Returns a rectangle representing of the sprite at the coordinates
+     * Returns a rectangle representing of the sprite at the coordinates.
      *
      * @param nextX the next xCoordinate of the sprite
      * @param nextY the next yCoordinate of the sprite
      * @return rectangle that represents the sprite's boundaries
      */
     public Rectangle2D getBounds(final double nextX, final double nextY) {
-        return new Rectangle2D (
+        return new Rectangle2D(
                 nextX,
                 nextY,
                 this.getImageViewWidth(),
@@ -188,7 +178,7 @@ public class Sprite {
      */
     @Override
     public boolean equals(final Object object) {
-        if (this == object ) {
+        if (this == object) {
             return true;
         }
         if (!(object instanceof Sprite sprite)) {
@@ -199,12 +189,12 @@ public class Sprite {
                 && Objects.equals(image, sprite.image)
                 && Objects.equals(imageView, sprite.imageView);
     }
+
     /**
      * Returns the hashcode representation of the sprite object.
      *
      * @return the hashcode of the sprite object as int
      */
-
     @Override
     public int hashCode() {
         return Objects.hash(xCoordinate, yCoordinate, image, imageView);

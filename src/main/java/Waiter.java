@@ -1,14 +1,11 @@
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-
 /**
- * Represents a Waiter
+ * Represents a Waiter.
  *
  * @author Jiayin Jossie Yan
  * @version 2025
@@ -23,27 +20,38 @@ public final class Waiter extends Sprite {
      * The height of the waiter's interaction box.
      */
     private static final double INTERACTION_BOX_HEIGHT = 50;
-    
-    
+    /**
+     * The speed of the waiter.
+     */
+    private static final double SPEED = 4;
+    /**
+     * Dish X offset.
+     */
+    public static final int DISH_X_OFFSET = 10;
+    /**
+     * Customer Y offset.
+     */
+    public static final int CUSTOMER_Y_OFFSET = 20;
+
     private double currentIncome;
     private int speed;
-    public Image up1;
-    public Image up2;
-    public Image up3;
+    private Image up1;
+    private Image up2;
+    private Image up3;
 
-    public Image down1;
-    public Image down2;
-    public Image down3;
+    private Image down1;
+    private Image down2;
+    private Image down3;
 
-    public Image left1;
-    public Image left2;
-    public Image left3;
+    private Image left1;
+    private Image left2;
+    private Image left3;
 
-    public Image right1;
-    public Image right2;
-    public Image right3;
+    private Image right1;
+    private Image right2;
+    private Image right3;
     private final Set<KeyCode> keysPressed = new HashSet<>();
-    private static final double SPEED = 4;
+
     private String direction = "down";
     private final TileManager tileManager;
 
@@ -58,7 +66,7 @@ public final class Waiter extends Sprite {
      * @param yCoordinate represents the yCoordinate coordinate value as a double
      * @param tileManager represents the tile manager
      */
-    Waiter(double xCoordinate, double yCoordinate, TileManager tileManager) {
+    Waiter(final double xCoordinate, final double yCoordinate, final TileManager tileManager) {
         super(xCoordinate,
                 yCoordinate, new Image("file:src/main/resources/front.png"));
         this.currentIncome = 0.0;
@@ -71,26 +79,21 @@ public final class Waiter extends Sprite {
      * Loads the sprite images.
      */
     public void loadWaiterImage() {
-        try {
-            up1 = new Image("file:src/main/resources/waiter/back.png");
-            up2 = new Image("file:src/main/resources/waiter/back_step_left.png");
-            up3 = new Image("file:src/main/resources/waiter/back_step_right.png");
+        up1 = new Image("file:src/main/resources/waiter/back.png");
+        up2 = new Image("file:src/main/resources/waiter/back_step_left.png");
+        up3 = new Image("file:src/main/resources/waiter/back_step_right.png");
 
-            down1 = new Image("file:src/main/resources/waiter/front.png");
-            down2 = new Image("file:src/main/resources/waiter/front_step_left.png");
-            down3 = new Image("file:src/main/resources/waiter/front_step_right.png");
+        down1 = new Image("file:src/main/resources/waiter/front.png");
+        down2 = new Image("file:src/main/resources/waiter/front_step_left.png");
+        down3 = new Image("file:src/main/resources/waiter/front_step_right.png");
 
-            left1 = new Image("file:src/main/resources/waiter/left_walk.png");
-            left2 = new Image("file:src/main/resources/waiter/left_walk_swingbackwards.png");
-            left3 = new Image("file:src/main/resources/waiter/left_walk_swingforward.png");
+        left1 = new Image("file:src/main/resources/waiter/left_walk.png");
+        left2 = new Image("file:src/main/resources/waiter/left_walk_swingbackwards.png");
+        left3 = new Image("file:src/main/resources/waiter/left_walk_swingforward.png");
 
-            right1 = new Image("file:src/main/resources/waiter/right_walk.png");
-            right2 = new Image("file:src/main/resources/waiter/right_walk_swingbackwards.png");
-            right3 = new Image("file:src/main/resources/waiter/right_walk_swingforward.png");
-
-        } catch (Exception e) {
-            System.out.println("Image not found");
-        }
+        right1 = new Image("file:src/main/resources/waiter/right_walk.png");
+        right2 = new Image("file:src/main/resources/waiter/right_walk_swingbackwards.png");
+        right3 = new Image("file:src/main/resources/waiter/right_walk_swingforward.png");
 
     }
 
@@ -104,11 +107,11 @@ public final class Waiter extends Sprite {
     }
 
     /**
-     * Sets the waiter's income to the current income
+     * Sets the waiter's income to the current income.
      *
      * @param newIncome the new income
      */
-    public void setCurrentIncome(double newIncome) {
+    public void setCurrentIncome(final double newIncome) {
         this.currentIncome = newIncome;
     }
 
@@ -147,19 +150,17 @@ public final class Waiter extends Sprite {
             currentY = attemptedY;
         }
 
-
-
         this.setXCoordinate(currentX);
         this.setYCoordinate(currentY);
 
         if (carryingCustomer != null) {
             carryingCustomer.setXCoordinate(this.getXCoordinate());
-            carryingCustomer.setYCoordinate(this.getYCoordinate() - 20);
+            carryingCustomer.setYCoordinate(this.getYCoordinate() - CUSTOMER_Y_OFFSET);
         }
 
         if (carriedDish != null) {
-            carriedDish.setXCoordinate(this.getXCoordinate() + 10);
-            carriedDish.setYCoordinate(this.getYCoordinate() - 10);
+            carriedDish.setXCoordinate(this.getXCoordinate() + DISH_X_OFFSET);
+            carriedDish.setYCoordinate(this.getYCoordinate() - DISH_X_OFFSET);
         }
 
         updateSpriteImage();
@@ -186,6 +187,9 @@ public final class Waiter extends Sprite {
             case "right":
                 newImage = right1;
                 break;
+            default:
+                newImage = right1;
+                break;
         }
         if (newImage != null) {
             this.setNewImage(newImage);
@@ -198,7 +202,7 @@ public final class Waiter extends Sprite {
      *
      * @param code the pressed key
      */
-    public void handleKeyPressed(KeyCode code) {
+    public void handleKeyPressed(final KeyCode code) {
         keysPressed.add(code);
     }
 
@@ -207,7 +211,7 @@ public final class Waiter extends Sprite {
      *
      * @param code the key released
      */
-    public void handleKeyReleased(KeyCode code) {
+    public void handleKeyReleased(final KeyCode code) {
         keysPressed.remove(code);
     }
 
@@ -225,7 +229,7 @@ public final class Waiter extends Sprite {
      *
      * @param direction the new direction
      */
-    public void setDirection(String direction) {
+    public void setDirection(final String direction) {
         this.direction = direction;
     }
 
@@ -249,32 +253,60 @@ public final class Waiter extends Sprite {
 
         switch (this.direction) {
             case "up":
-                return new Rectangle2D(xCoordinateHold, yCoordinateHold - INTERACTION_BOX_HEIGHT, imageViewWidth, INTERACTION_BOX_HEIGHT);
+                return new Rectangle2D(xCoordinateHold,
+                        yCoordinateHold - INTERACTION_BOX_HEIGHT,
+                        imageViewWidth,
+                        INTERACTION_BOX_HEIGHT);
             case "down":
-                return new Rectangle2D(xCoordinateHold, yCoordinateHold + imageViewHeight, imageViewWidth, INTERACTION_BOX_HEIGHT);
+                return new Rectangle2D(xCoordinateHold,
+                        yCoordinateHold + imageViewHeight,
+                        imageViewWidth,
+                        INTERACTION_BOX_HEIGHT);
             case "left":
-                return new Rectangle2D(xCoordinateHold - INTERACTION_BOX_WIDTH, yCoordinateHold, INTERACTION_BOX_WIDTH, imageViewHeight);
+                return new Rectangle2D(xCoordinateHold - INTERACTION_BOX_WIDTH,
+                        yCoordinateHold,
+                        INTERACTION_BOX_WIDTH,
+                        imageViewHeight);
             case "right":
-                return new Rectangle2D(xCoordinateHold + imageViewWidth, yCoordinateHold, INTERACTION_BOX_WIDTH, imageViewHeight);
+                return new Rectangle2D(xCoordinateHold + imageViewWidth,
+                        yCoordinateHold,
+                        INTERACTION_BOX_WIDTH,
+                        imageViewHeight);
             default:
-                return new Rectangle2D(xCoordinateHold, yCoordinateHold, imageViewWidth, imageViewHeight);
+                return new Rectangle2D(xCoordinateHold,
+                        yCoordinateHold,
+                        imageViewWidth,
+                        imageViewHeight);
         }
     }
 
     /**
+     * Add the money to the waiter's current income.
+     *
      * @param money the money to be added to income
      */
-    public void addIncome(double money) {
+    public void addIncome(final double money) {
         this.currentIncome += money;
     }
 
-    public void pickUpCustomer(Customer customer) {
+    /**
+     * Pick up the customer.
+     *
+     * @param customer to be picked up
+     */
+    public void pickUpCustomer(final Customer customer) {
         this.carryingCustomer = customer;
         customer.setCollision(false);
         tileManager.remove(customer);
     }
 
-    public boolean seatCustomerAtTable(Table table) {
+    /**
+     * Seat the customer and return true, else false.
+     *
+     * @param table to seat the customer at
+     * @return true when the customer is seated
+     */
+    public boolean seatCustomerAtTable(final Table table) {
         if (carryingCustomer != null && !table.isAtMax()) {
             carryingCustomer.assignTable(table);
             carryingCustomer.sitDown();
@@ -285,7 +317,14 @@ public final class Waiter extends Sprite {
         }
         return false;
     }
-    public void pickUpDish(Dish dish) {
+
+
+    /**
+     * Pick up a dish.
+     *
+     * @param dish to be picked up
+     */
+    public void pickUpDish(final Dish dish) {
         if (carriedDish == null) {
             this.carriedDish = dish;
             dish.pickUp();
@@ -293,20 +332,45 @@ public final class Waiter extends Sprite {
     }
 
 
+    /**
+     * Return if the carrying Customer is not null.
+     *
+     * @return carrying Customer
+     */
     public boolean isCarryingCustomer() {
         return carryingCustomer != null;
     }
 
+    /**
+     * Return if the carried Dish is not null.
+     *
+     * @return carriedDish
+     */
     public boolean isCarryingDish() {
         return carriedDish != null;
     }
 
+    /**
+     * Return the carrying customer.
+     *
+     * @return carrying customer
+     */
     public Customer getCarryingCustomer() {
         return carryingCustomer;
     }
+
+    /**
+     * Set the carried Dish to null.
+     */
     public void deleteDish() {
         this.carriedDish = null;
     }
+
+    /**
+     * Gets the carried dish.
+     *
+     * @return the carried dish
+     */
     public Dish getCarriedDish() {
         return carriedDish;
     }
@@ -348,12 +412,16 @@ public final class Waiter extends Sprite {
      * @return true if the object is equal to the comparing object
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         }
-        if (!(object instanceof Waiter waiter)) return false;
-        if (!super.equals(object)) return false;
+        if (!(object instanceof Waiter waiter)) {
+            return false;
+        }
+        if (!super.equals(object)) {
+            return false;
+        }
         return Double.compare(currentIncome, waiter.currentIncome) == 0
                 && speed == waiter.speed
                 && Objects.equals(up1, waiter.up1)
