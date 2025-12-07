@@ -38,7 +38,7 @@ public class TileManager {
 
     public void loadTileImages() {
         tiles[0] = new Tile(new Image("file:src/main/resources/background/brick_walling.png"), true);
-        tiles[1] = new Tile(new Image("file:src/main/resources/background/flooring.png"), false );
+        tiles[1] = new Tile(new Image("file:src/main/resources/background/flooring.png"), false);
         tiles[2] = new Tile(new Image("file:src/main/resources/background/kitchen_flooring.png"), false);
     }
 
@@ -98,7 +98,7 @@ public class TileManager {
         }
 
         for (Tile obj : placedObjects) {
-            if (!obj.isCollision())  {
+            if (!obj.isCollision()) {
                 continue;
             }
             Rectangle2D objBounds = new Rectangle2D(
@@ -130,9 +130,9 @@ public class TileManager {
 
     private boolean checkTileMapCollision(Rectangle2D futureBounds) {
 
-        int leftCol   = (int) (futureBounds.getMinX() / TILE_SIZE);
-        int rightCol  = (int) (futureBounds.getMaxX() / TILE_SIZE);
-        int topRow    = (int) (futureBounds.getMinY() / TILE_SIZE);
+        int leftCol = (int) (futureBounds.getMinX() / TILE_SIZE);
+        int rightCol = (int) (futureBounds.getMaxX() / TILE_SIZE);
+        int topRow = (int) (futureBounds.getMinY() / TILE_SIZE);
         int bottomRow = (int) (futureBounds.getMaxY() / TILE_SIZE);
 
 
@@ -148,8 +148,10 @@ public class TileManager {
         Rectangle2D zone = waiter.getInteractionBox();
 
         for (Tile obj : placedObjects) {
-            if (obj == null) continue;
 
+            if (obj == null) {
+                continue;
+            }
             if (zone.intersects(obj.getBounds())) {
                 obj.interact(waiter);
                 return;
@@ -158,6 +160,5 @@ public class TileManager {
 
         System.out.println("Nothing...");
     }
-
 
 }

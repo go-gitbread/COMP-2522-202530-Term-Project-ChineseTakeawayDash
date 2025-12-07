@@ -15,6 +15,15 @@ public class Furniture extends Tile implements Interactable {
         this.yCoordinate = yCoordinate;
         this.furnitureName = furnitureName;
         switch (this.furnitureName) {
+            case FurnitureName.INSTRUCTIONS_BOOK -> {
+                this.setTileImage(new Image("file:src/main/resources/furniture/instructions_book.png"));
+                this.setTileImageView(new ImageView(this.getTileImage()));
+                this.getTileImageView().setX(xCoordinate);
+                this.getTileImageView().setY(yCoordinate);
+                this.getTileImageView().setFitWidth(TILE_SIZE / 2.0);
+                this.getTileImageView().setFitHeight(TILE_SIZE / 2.0);
+                this.isInteractable = true;
+            }
             case FurnitureName.FRYER -> {
                 this.setTileImage(new Image("file:src/main/resources/kitchen/fryer.png"));
                 this.setTileImageView(new ImageView(this.getTileImage()));
@@ -33,6 +42,15 @@ public class Furniture extends Tile implements Interactable {
                 this.getTileImageView().setFitHeight(TILE_SIZE);
                 this.isInteractable = false;
             }
+            case FurnitureName.DESK -> {
+                this.setTileImage(new Image("file:src/main/resources/kitchen/horizontal_counter.png"));
+                this.setTileImageView(new ImageView(this.getTileImage()));
+                this.getTileImageView().setX(xCoordinate);
+                this.getTileImageView().setY(yCoordinate);
+                this.getTileImageView().setFitWidth(100);
+                this.getTileImageView().setFitHeight(TILE_SIZE);
+                this.isInteractable = true;
+            }
             case FurnitureName.VERTICAL_COUNTER -> {
                 this.setTileImage(new Image("file:src/main/resources/kitchen/vertical_counter.png"));
                 this.setTileImageView(new ImageView(this.getTileImage()));
@@ -40,7 +58,7 @@ public class Furniture extends Tile implements Interactable {
                 this.getTileImageView().setY(yCoordinate);
                 this.getTileImageView().setFitWidth(TILE_SIZE);
                 this.getTileImageView().setFitHeight(80);
-                this.isInteractable = true;
+                this.isInteractable = false;
             }
             case FurnitureName.SHELF -> {
                 this.setTileImage(new Image("file:src/main/resources/kitchen/shelf.png"));
@@ -67,15 +85,6 @@ public class Furniture extends Tile implements Interactable {
                 this.getTileImageView().setY(yCoordinate);
                 this.getTileImageView().setFitWidth(TILE_SIZE);
                 this.getTileImageView().setFitHeight(TILE_SIZE);
-                this.isInteractable = true;
-            }
-            case FurnitureName.INSTRUCTIONS_BOOK -> {
-                this.setTileImage(new Image("file:src/main/resources/furniture/instructions_book.png"));
-                this.setTileImageView(new ImageView(this.getTileImage()));
-                this.getTileImageView().setX(xCoordinate);
-                this.getTileImageView().setY(yCoordinate);
-                this.getTileImageView().setFitWidth(TILE_SIZE / 2.0);
-                this.getTileImageView().setFitHeight(TILE_SIZE / 2.0);
                 this.isInteractable = true;
             }
             case FurnitureName.BOXES -> {
@@ -125,9 +134,13 @@ public class Furniture extends Tile implements Interactable {
 
     @Override
     public void interact(Waiter waiter) {
+        System.out.println("DEBUG: furnitureName = " + furnitureName);
         switch (furnitureName) {
             case STOVE:
                 System.out.println("this a stove");
+                break;
+            case DESK:
+                System.out.println("print same thing as instructions book");
                 break;
             case FRYER:
                 System.out.println("this a fryer...");
@@ -155,6 +168,7 @@ public class Furniture extends Tile implements Interactable {
                 break;
             default:
                 System.out.println("nothing here");
+                break;
         }
 
     }
