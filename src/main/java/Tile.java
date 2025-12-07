@@ -68,8 +68,8 @@ public class Tile implements Interactable {
 
 
     @Override
-    public void interact(Waiter waiter) {
-        System.out.println("This tile has no interaction.");
+    public String interact(Waiter waiter) {
+        return("");
     }
 
     @Override
