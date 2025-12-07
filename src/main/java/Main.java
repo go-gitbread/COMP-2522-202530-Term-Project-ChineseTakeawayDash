@@ -6,8 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-
 /**
  * This class sets up the game experience of Jossie's Game " Lok Lok Garden Simulation".
  * This is including tables, chairs, furniture, customers,
