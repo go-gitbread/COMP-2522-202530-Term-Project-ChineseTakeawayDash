@@ -1,3 +1,9 @@
+/**
+ * Enumerates the values for FurnitureTypes
+ *
+ * @author Jossie Yan
+ * @version 2025
+ */
 public enum FurnitureType {
     FRYER,
     STOVE,
