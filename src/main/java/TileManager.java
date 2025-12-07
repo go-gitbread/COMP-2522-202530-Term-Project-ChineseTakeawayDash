@@ -11,6 +11,9 @@ import java.util.List;
 
 public class TileManager {
     public static final int TILE_SIZE = 38;
+    private static final double KITCHEN_SPAWN_X = 600;
+    private static final double KITCHEN_SPAWN_Y = 180;
+    private Pane gameRoot = new Pane();
 
     private final Tile[] tiles;
     private final int rows;
@@ -117,17 +120,6 @@ public class TileManager {
         return false;
     }
 
-    private boolean checkObjectCollision(Rectangle2D spriteBounds, Tile obj) {
-        Rectangle2D objBounds = new Rectangle2D(
-                obj.getTileImageView().getX(),
-                obj.getTileImageView().getY(),
-                obj.getTileImageView().getFitWidth(),
-                obj.getTileImageView().getFitHeight()
-        );
-
-        return spriteBounds.intersects(objBounds);
-    }
-
 
     private boolean checkTileMapCollision(Rectangle2D futureBounds) {
 
@@ -144,8 +136,19 @@ public class TileManager {
     }
 
 
+    public void spawnDishForCustomer() {
+        Dish dish = new Dish(KITCHEN_SPAWN_X, KITCHEN_SPAWN_Y);
+        placedObjects.add(dish);
+        gameRoot.getChildren().add(dish.getTileImageView());
+
+        System.out.println("Dish ready for customer!");
+    }
+
+
     public String checkInteraction(Waiter waiter) {
+
         Rectangle2D zone = waiter.getInteractionBox();
+
         for (Tile obj : placedObjects) {
 
             if (obj instanceof Interactable interactable &&
@@ -157,4 +160,11 @@ public class TileManager {
         return "";
     }
 
+    public void remove(Customer customer) {
+        this.placedObjects.remove(customer);
+    }
+
+    public void setGameRoot(Pane root) {
+        this.gameRoot = root;
+    }
 }
