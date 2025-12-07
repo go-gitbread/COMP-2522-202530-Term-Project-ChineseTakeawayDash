@@ -1,6 +1,8 @@
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 public class Dialogue extends Pane {
@@ -18,6 +20,7 @@ public class Dialogue extends Pane {
         rectangleBox.setStrokeWidth(3);
 
         message = new Text();
+        message.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 13));
         message.setX(20);
         message.setY(40);
 
